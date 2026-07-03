@@ -39,8 +39,9 @@ brew install git scc node
 From the repo root:
 
 ```bash
-python3 -m venv .venv
+python3.12 -m venv .venv  # or python3.11 / python3.10
 source .venv/bin/activate
+python --version           # must be 3.10+
 python -m pip install --upgrade pip setuptools wheel hatchling
 python -m pip install -r org_pipeline_requirements.txt
 python -m pip install -e ./codebase_profiler
@@ -50,12 +51,17 @@ If you received the **org-pipeline-kit** zip, extract it, `cd org-pipeline-kit`,
 
 ```bash
 unzip org-pipeline-kit.zip && cd org-pipeline-kit
-python3 -m venv .venv && source .venv/bin/activate
+python3.12 -m venv .venv && source .venv/bin/activate
+python --version           # must be 3.10+
 python -m pip install --upgrade pip setuptools wheel hatchling
 python -m pip install -r requirements.txt
 python -m pip install -e ./codebase_profiler
 cp tokens.example tokens   # then edit tokens with real keys
 ```
+
+If your prompt already shows another virtualenv, for example `(env)`, run
+`deactivate` first. `codebase_profiler` requires Python 3.10+, so a Python 3.9
+venv will fail even after upgrading `pip`.
 
 If editable install fails with `setup.py or setup.cfg not found`, upgrade `pip`
 inside the venv and rerun the profiler install:

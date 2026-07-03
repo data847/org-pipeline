@@ -68,11 +68,16 @@ npx --version
 ```bash
 python3.12 -m venv .venv  # or python3.11 / python3.10
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
+python --version            # must be 3.10+
 python -m pip install --upgrade pip setuptools wheel hatchling
 python -m pip install -r requirements.txt
 python -m pip install -e ./codebase_profiler
 export ORG_PIPELINE_PYTHON="$(pwd)/.venv/bin/python"
 ```
+
+If your shell already shows another venv, such as `(env)`, run `deactivate`
+first. `codebase_profiler` requires Python 3.10+, so a Python 3.9 venv will fail
+even if package installation starts successfully.
 
 `ORG_PIPELINE_PYTHON` is important: the master script launches helper scripts in
 subprocesses, and this forces them to use the same venv where `requests`,
