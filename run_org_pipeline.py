@@ -41,14 +41,28 @@ QUALITY_AGENT = CODING / "outputs" / "repo-quality-score-agent"
 SIGNAL_SCORER_DIR = CODING / "outputs" / "repo-quality-score"
 TASK_PROFILE_SCRIPT = CODING / "pr_task_profile_report.py"
 
+def active_venv_python_candidates() -> list[str]:
+    venv = os.environ.get("VIRTUAL_ENV", "").strip()
+    if not venv:
+        return []
+    root = Path(venv)
+    return [
+        str(root / "bin" / "python"),
+        str(root / "Scripts" / "python.exe"),
+    ]
+
+
 PYTHON_CANDIDATES = [
     os.environ.get("ORG_PIPELINE_PYTHON", ""),
+    *active_venv_python_candidates(),
+    sys.executable,
+    str(CODING / ".venv" / "bin" / "python"),
+    str(CODING / ".venv" / "Scripts" / "python.exe"),
     str(CODING / "env311" / "bin" / "python"),
     str(PROFILER_ROOT / ".venv" / "bin" / "python"),
     shutil.which("python3.12") or "",
     shutil.which("python3.11") or "",
     shutil.which("python3.10") or "",
-    sys.executable,
 ]
 
 

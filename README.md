@@ -66,11 +66,16 @@ npx --version
 ## Python Setup
 
 ```bash
-python -m venv .venv
+python3.12 -m venv .venv  # or python3.11 / python3.10
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 pip install -e ./codebase_profiler
+export ORG_PIPELINE_PYTHON="$(pwd)/.venv/bin/python"
 ```
+
+`ORG_PIPELINE_PYTHON` is important: the master script launches helper scripts in
+subprocesses, and this forces them to use the same venv where `requests`,
+`openai`, `openpyxl`, and other dependencies were installed.
 
 ## Tokens
 
@@ -89,37 +94,37 @@ Do not commit real tokens. `tokens` is ignored by git.
 GitHub org:
 
 ```bash
-python run_org_pipeline.py --github-org <ORG_NAME> --tokens-file tokens --workers 10
+ORG_PIPELINE_PYTHON="$(pwd)/.venv/bin/python" python run_org_pipeline.py --github-org <ORG_NAME> --tokens-file tokens --workers 10
 ```
 
 Single GitHub repo:
 
 ```bash
-python run_org_pipeline.py --github-repo <OWNER>/<REPO> --tokens-file tokens --workers 1
+ORG_PIPELINE_PYTHON="$(pwd)/.venv/bin/python" python run_org_pipeline.py --github-repo <OWNER>/<REPO> --tokens-file tokens --workers 1
 ```
 
 GitLab group:
 
 ```bash
-python run_org_pipeline.py --gitlab-group <GROUP_NAME> --tokens-file tokens --workers 10
+ORG_PIPELINE_PYTHON="$(pwd)/.venv/bin/python" python run_org_pipeline.py --gitlab-group <GROUP_NAME> --tokens-file tokens --workers 10
 ```
 
 Single GitLab project:
 
 ```bash
-python run_org_pipeline.py --gitlab-project <GROUP>/<PROJECT> --tokens-file tokens --workers 1
+ORG_PIPELINE_PYTHON="$(pwd)/.venv/bin/python" python run_org_pipeline.py --gitlab-project <GROUP>/<PROJECT> --tokens-file tokens --workers 1
 ```
 
 Local repos folder:
 
 ```bash
-python run_org_pipeline.py --local-repos-dir ./repos --repos-manifest repos-manifest.example.json --tokens-file tokens --workers 4
+ORG_PIPELINE_PYTHON="$(pwd)/.venv/bin/python" python run_org_pipeline.py --local-repos-dir ./repos --repos-manifest repos-manifest.example.json --tokens-file tokens --workers 4
 ```
 
 No-quality variant:
 
 ```bash
-python run_org_pipeline_no_quality.py --github-org <ORG_NAME> --tokens-file tokens --workers 10
+ORG_PIPELINE_PYTHON="$(pwd)/.venv/bin/python" python run_org_pipeline_no_quality.py --github-org <ORG_NAME> --tokens-file tokens --workers 10
 ```
 
 ## Outputs
