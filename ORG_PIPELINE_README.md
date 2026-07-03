@@ -41,8 +41,9 @@ From the repo root:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -r org_pipeline_requirements.txt
-pip install -e ./codebase_profiler
+python -m pip install --upgrade pip setuptools wheel hatchling
+python -m pip install -r org_pipeline_requirements.txt
+python -m pip install -e ./codebase_profiler
 ```
 
 If you received the **org-pipeline-kit** zip, extract it, `cd org-pipeline-kit`, and use `requirements.txt` instead:
@@ -50,9 +51,18 @@ If you received the **org-pipeline-kit** zip, extract it, `cd org-pipeline-kit`,
 ```bash
 unzip org-pipeline-kit.zip && cd org-pipeline-kit
 python3 -m venv .venv && source .venv/bin/activate
-pip install -r requirements.txt
-pip install -e ./codebase_profiler
+python -m pip install --upgrade pip setuptools wheel hatchling
+python -m pip install -r requirements.txt
+python -m pip install -e ./codebase_profiler
 cp tokens.example tokens   # then edit tokens with real keys
+```
+
+If editable install fails with `setup.py or setup.cfg not found`, upgrade `pip`
+inside the venv and rerun the profiler install:
+
+```bash
+python -m pip install --upgrade pip hatchling
+python -m pip install -e ./codebase_profiler
 ```
 
 ---

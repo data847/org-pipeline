@@ -68,14 +68,23 @@ npx --version
 ```bash
 python3.12 -m venv .venv  # or python3.11 / python3.10
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-pip install -e ./codebase_profiler
+python -m pip install --upgrade pip setuptools wheel hatchling
+python -m pip install -r requirements.txt
+python -m pip install -e ./codebase_profiler
 export ORG_PIPELINE_PYTHON="$(pwd)/.venv/bin/python"
 ```
 
 `ORG_PIPELINE_PYTHON` is important: the master script launches helper scripts in
 subprocesses, and this forces them to use the same venv where `requests`,
 `openai`, `openpyxl`, and other dependencies were installed.
+
+If `pip install -e ./codebase_profiler` fails with `setup.py or setup.cfg not found`,
+your `pip` is too old for editable installs from `pyproject.toml`. Run:
+
+```bash
+python -m pip install --upgrade pip hatchling
+python -m pip install -e ./codebase_profiler
+```
 
 ## Tokens
 
